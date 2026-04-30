@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
 
 export default function LoginPage() {
@@ -10,6 +11,15 @@ export default function LoginPage() {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(form);
+    try {
+      console.log(form);
+
+      toast.success("Login successful ");
+    } catch (error) {
+      toast.error("Login failed ");
+    }
+
+
   };
 
   return (

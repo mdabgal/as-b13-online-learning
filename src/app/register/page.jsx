@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
 
 export default function RegisterPage() {
@@ -10,6 +11,16 @@ export default function RegisterPage() {
   const handleRegister = (e) => {
     e.preventDefault();
     console.log(form);
+  
+
+    try {
+      
+      console.log(form);
+
+      toast.success("Registration successful ");
+    } catch (error) {
+      toast.error("Registration failed ");
+    }
   };
 
   return (
@@ -59,15 +70,14 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {/* OR */}
+      
         <div className="divider">OR</div>
 
-        {/* Google */}
         <button className="btn w-full border border-gray-300 flex items-center gap-2">
           <FaGoogle /> Continue with Google
         </button>
 
-        {/* Login Link */}
+       
         <p className="text-center text-sm mt-4">
           Already have an account?{" "}
           <Link href="/login" className="text-[#14B8A6] font-semibold">
