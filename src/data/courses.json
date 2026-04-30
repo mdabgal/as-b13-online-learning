@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "title": "Complete Web Development Bootcamp",
+    "instructor": "John Doe",
+    "duration": "20 hours",
+    "rating": 4.8,
+    "level": "Beginner",
+    "description": "Learn full-stack web development from scratch with HTML, CSS, JavaScript, React and Node.js.",
+    "image":"/images/faizur-rehman-pHPzdEHN6Os-unsplash.jpg",
+    "category": "Development"
+  },
+  {
+    "id": 2,
+    "title": "UI/UX Design Masterclass",
+    "instructor": "Sarah Smith",
+    "duration": "15 hours",
+    "rating": 4.7,
+    "level": "Beginner",
+    "description": "Master modern UI/UX design principles using Figma and real-world projects.",
+    "image": "/images/fili-santillan-qp51FQhBnS0-unsplash.jpg",
+    "category": "Design"
+  },
+  {
+    "id": 3,
+    "title": "Digital Marketing Complete Guide",
+    "instructor": "Michael Brown",
+    "duration": "12 hours",
+    "rating": 4.6,
+    "level": "Intermediate",
+    "description": "Learn SEO, social media marketing, and paid ads strategies to grow businesses online.",
+    "image": "/images/james-harrison-vpOeXr5wmR4-unsplash.jpg",
+    "category": "Marketing"
+  },
+  {
+    "id": 4,
+    "title": "Python for Beginners",
+    "instructor": "Emily Johnson",
+    "duration": "18 hours",
+    "rating": 4.9,
+    "level": "Beginner",
+    "description": "Start coding with Python and learn basics to advanced programming concepts.",
+    "image": "/images/marvin-meyer-SYTO3xs06fU-unsplash.jpg",
+    "category": "Programming"
+  },
+  {
+    "id": 5,
+    "title": "React JS Advanced Course",
+    "instructor": "David Wilson",
+    "duration": "16 hours",
+    "rating": 4.8,
+    "level": "Advanced",
+    "description": "Build modern web apps using React, hooks, context API and real projects.",
+    "image": "/images/redmind-studio-GWh1QdkJuuM-unsplash.jpg",
+    "category": "Development"
+  },
+  {
+    "id": 6,
+    "title": "Freelancing Career Roadmap",
+    "instructor": "Jessica Lee",
+    "duration": "10 hours",
+    "rating": 4.5,
+    "level": "Beginner",
+    "description": "Learn how to start freelancing, get clients and build a successful online career.",
+    "image": "/images/ux-store-jJT2r2n7lYA-unsplash.jpg",
+    "category": "Career"
+  }
+]
