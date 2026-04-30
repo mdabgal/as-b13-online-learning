@@ -5,6 +5,7 @@ import {
   FaGithub,
   FaLinkedin,
   FaGraduationCap,
+  FaRocket,
 } from "react-icons/fa";
 
 export default function Footer() {
@@ -19,9 +20,9 @@ export default function Footer() {
             <FaGraduationCap /> SkillSphere
           </p>
 
-          <p className="mt-3 text-sm text-gray-600">
+          <p className="mt-3 text-sm  text-gray-600">
             Upgrade your skills with modern courses and expert instructors.
-            Learn anytime, anywhere 🚀
+            Learn anytime, anywhere 
           </p>
         </div>
 
