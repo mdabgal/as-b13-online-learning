@@ -1,80 +1,142 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { FaGraduationCap } from "react-icons/fa";
 
 export default function Navbar() {
-  const [user, setUser] = useState(null); 
+  const { data: session } = authClient.useSession();
+  const [open, setOpen] = useState(false);
 
-  const handleLogout = () => {
-    setUser(null);
-  };
+
+    const avatar =
+    typeof session?.user?.image === "string" &&
+    session.user.image.startsWith("http")
+      ? session.user.image
+      : "/userAvatar.png";
 
   return (
-    <div className="navbar bg-base-100 shadow-md px-4 md:px-10">
-      
-     
-      <div className="navbar-start">
-       
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
-            ☰
-          </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/courses">Courses</Link></li>
-            <li><Link href="/profile">My Profile</Link></li>
-          </ul>
-        </div>
+    <div className="navbar bg-base-100 shadow px-6 relative">
 
-     
-        <Link href="/" className="text-xl flex justify-center items-center gap-2 font-bold text-[#14B8A6]">
-          <FaGraduationCap /> SkillSphere
+      {/* LEFT - LOGO */}
+      <div className="flex-1">
+        <Link href="/" className="text-xl font-bold text-[#14B8A6]">
+          SkillSphere
         </Link>
       </div>
 
-    
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-3 font-medium">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/courses">Courses</Link></li>
-          <li><Link href="/profile">My Profile</Link></li>
-        </ul>
+      {/* CENTER MENU (TRUE CENTER) */}
+      <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6">
+
+        <Link href="/" className="hover:text-teal-500">
+          Home
+        </Link>
+
+        <Link href="/courses" className="hover:text-teal-500">
+          Courses
+        </Link>
+
+        <Link href="/profile" className="hover:text-teal-500">
+          My Profile
+        </Link>
+
       </div>
 
-     
-      <div className="navbar-end gap-2">
+      {/* RIGHT SIDE */}
+      <div className="flex items-center gap-3 ml-auto">
 
-        {user ? (
-          <>
-           
-            <div className="avatar">
-              <div className="w-10 rounded-full">
-                <img src="https://i.ibb.co/2kRZQ0H/user.png" />
+        {/* MOBILE MENU BTN */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="btn btn-sm md:hidden"
+        >
+          ☰
+        </button>
+
+        {/* AUTH (DESKTOP) */}
+        <div className="hidden md:flex items-center gap-3">
+
+          {session?.user ? (
+            <>
+             <Image
+  src={avatar}
+  alt="User avatar"
+  width={60}
+  height={60}
+  className="w-10 h-10 rounded-full border"
+/>
+
+              <span className="text-sm font-semibold">
+                {session.user.name}
+              </span>
+
+              <button
+                onClick={() => authClient.signOut()}
+                className="btn btn-sm btn-error text-white"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="btn btn-sm btn-outline">
+                Login
+              </Link>
+              <Link href="/register" className="btn btn-sm bg-[#14B8A6] text-white">
+                Register
+              </Link>
+            </>
+          )}
+
+        </div>
+
+      </div>
+
+      {/* MOBILE MENU */}
+      {open && (
+        <div className="absolute top-16 left-0 w-full bg-base-100 shadow-md flex flex-col gap-3 p-4 md:hidden z-50">
+
+          <Link href="/" onClick={() => setOpen(false)}>Home</Link>
+          <Link href="/courses" onClick={() => setOpen(false)}>Courses</Link>
+          <Link href="/profile" onClick={() => setOpen(false)}>My Profile</Link>
+
+          <hr />
+
+          {session?.user ? (
+            <>
+              <div className="flex items-center gap-2">
+                <img
+                  src={session.user.image || "/user.png"}
+                  className="w-10 h-10 rounded-full"
+                />
+                <span>{session.user.name}</span>
               </div>
-            </div>
 
-        
-            <button onClick={handleLogout} className="btn btn-outline btn-sm">
-              Logout
-            </button>
-          </>
-        ) : (
-          <div className="flex gap-4">
-            <Link href="/login" className="btn p-4  bg-[#14B8A6] text-white  btn-sm">
-              Login
-            </Link>
-            <Link href="/register" className="btn btn-outline border  border-[#14B8A6] btn-sm">
-              Register
-            </Link>
-          </div>
-        )}
+              <button
+                onClick={() => {
+                  authClient.signOut();
+                  setOpen(false);
+                }}
+                className="btn btn-sm btn-error text-white"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="btn btn-sm btn-outline">
+                Login
+              </Link>
+              <Link href="/register" className="btn btn-sm bg-[#14B8A6] text-white">
+                Register
+              </Link>
+            </>
+          )}
 
-      </div>
+        </div>
+      )}
+
     </div>
   );
 }

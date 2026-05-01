@@ -1,25 +1,43 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [form, setForm] = useState({});
+  const router = useRouter();
 
-  const handleLogin = (e) => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(form);
+
+    const loading = toast.loading("Logging in...");
+
     try {
-      console.log(form);
+      const { data, error } = await authClient.signIn.email({
+        email: form.email,
+        password: form.password,
+      });
 
-      toast.success("Login successful ");
-    } catch (error) {
-      toast.error("Login failed ");
+      if (error) {
+        toast.error(error.message || "Login failed", { id: loading });
+        return;
+      }
+
+      toast.success("Login successful ", { id: loading });
+
+      router.push("/");
+
+    } catch (err) {
+      toast.error("Something went wrong", { id: loading });
     }
-
-
   };
 
   return (
@@ -38,7 +56,9 @@ export default function LoginPage() {
             placeholder="Email"
             className="input input-bordered w-full"
             required
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
           />
 
           <input
@@ -46,25 +66,25 @@ export default function LoginPage() {
             placeholder="Password"
             className="input input-bordered w-full"
             required
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, password: e.target.value })
+            }
           />
 
           <button className="btn w-full bg-[#14B8A6] text-white hover:bg-teal-600">
             Login
           </button>
+
         </form>
 
-        {/* OR */}
         <div className="divider">OR</div>
 
-        {/* Google Login */}
         <button className="btn w-full border border-gray-300 flex items-center gap-2">
           <FaGoogle /> Continue with Google
         </button>
 
-        {/* Register Link */}
         <p className="text-center text-sm mt-4">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <Link href="/register" className="text-[#14B8A6] font-semibold">
             Register
           </Link>

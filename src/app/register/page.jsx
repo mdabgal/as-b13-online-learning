@@ -1,31 +1,73 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    image: "",
+  });
 
-  const handleRegister = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log(form);
-  
+
+    if (form.password.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+
+    setLoading(true);
+    const loadingToast = toast.loading("Creating your account...");
 
     try {
-      
-      console.log(form);
+      const { data, error } = await authClient.signUp.email({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        image: form.image,
+      });
 
-      toast.success("Registration successful ");
-    } catch (error) {
-      toast.error("Registration failed ");
+      if (error) {
+        toast.error(error.message || "This email is already registered", {
+          id: loadingToast,
+        });
+        setLoading(false);
+        return;
+      }
+
+      if (data) {
+        toast.success(`Welcome ${form.name}! Account created successfully`, {
+          id: loadingToast,
+        });
+
+        // optional: reset form
+        setForm({
+          name: "",
+          email: "",
+          password: "",
+          image: "",
+        });
+      }
+
+    } catch (err) {
+      toast.error("Something went wrong. Try again later", {
+        id: loadingToast,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
-
       <div className="w-full max-w-md bg-base-100 shadow-xl rounded-2xl p-8">
 
         <h2 className="text-2xl font-bold text-center text-[#14B8A6]">
@@ -39,7 +81,10 @@ export default function RegisterPage() {
             placeholder="Full Name"
             className="input input-bordered w-full"
             required
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            value={form.name}
+            onChange={(e) =>
+              setForm({ ...form, name: e.target.value })
+            }
           />
 
           <input
@@ -47,14 +92,20 @@ export default function RegisterPage() {
             placeholder="Email"
             className="input input-bordered w-full"
             required
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            value={form.email}
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
           />
 
           <input
             type="text"
             placeholder="Photo URL"
             className="input input-bordered w-full"
-            onChange={(e) => setForm({ ...form, image: e.target.value })}
+            value={form.image}
+            onChange={(e) =>
+              setForm({ ...form, image: e.target.value })
+            }
           />
 
           <input
@@ -62,22 +113,26 @@ export default function RegisterPage() {
             placeholder="Password"
             className="input input-bordered w-full"
             required
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            value={form.password}
+            onChange={(e) =>
+              setForm({ ...form, password: e.target.value })
+            }
           />
 
-          <button className="btn w-full bg-[#14B8A6] text-white hover:bg-teal-600">
-            Register
+          <button
+            disabled={loading}
+            className="btn w-full bg-[#14B8A6] text-white hover:bg-teal-600"
+          >
+            {loading ? "Creating..." : "Register"}
           </button>
         </form>
 
-      
         <div className="divider">OR</div>
 
         <button className="btn w-full border border-gray-300 flex items-center gap-2">
           <FaGoogle /> Continue with Google
         </button>
 
-       
         <p className="text-center text-sm mt-4">
           Already have an account?{" "}
           <Link href="/login" className="text-[#14B8A6] font-semibold">
