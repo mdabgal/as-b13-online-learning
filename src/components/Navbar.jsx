@@ -19,14 +19,15 @@ export default function Navbar() {
   return (
     <div className="navbar bg-base-100 shadow px-6 relative">
 
-      {/* LEFT - LOGO */}
+   
+   
       <div className="flex-1">
         <Link href="/" className="text-xl font-bold text-[#14B8A6]">
           SkillSphere
         </Link>
       </div>
 
-      {/* CENTER MENU (TRUE CENTER) */}
+     
       <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6">
 
         <Link href="/" className="hover:text-teal-500">
@@ -43,10 +44,10 @@ export default function Navbar() {
 
       </div>
 
-      {/* RIGHT SIDE */}
+      
       <div className="flex items-center gap-3 ml-auto">
 
-        {/* MOBILE MENU BTN */}
+     
         <button
           onClick={() => setOpen(!open)}
           className="btn btn-sm md:hidden"
@@ -54,7 +55,7 @@ export default function Navbar() {
           ☰
         </button>
 
-        {/* AUTH (DESKTOP) */}
+       
         <div className="hidden md:flex items-center gap-3">
 
           {session?.user ? (
