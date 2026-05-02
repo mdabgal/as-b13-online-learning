@@ -41,7 +41,7 @@ export default function CourseDetails() {
 
   if (checking) {
     return (
-      <div className="flex justify-center items-center h-[60vh]">
+      <div className="flex justify-center  items-center h-[60vh]">
         <span className="loading loading-spinner text-[#14B8A6]"></span>
       </div>
     );
@@ -58,7 +58,7 @@ export default function CourseDetails() {
   return (
     <div className="container mx-auto px-6 py-10">
 
-      <div className="max-w-3xl mx-auto border shadow-xl rounded-xl p-6">
+      <div className="max-w-3xl mx-auto border border-gray-100 shadow-2xl rounded-xl p-6">
 
         <div className="relative w-full h-64 rounded-xl overflow-hidden">
           <Image
