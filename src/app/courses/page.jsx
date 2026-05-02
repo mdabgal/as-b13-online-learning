@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function CoursesPage() {
   const [search, setSearch] = useState("");
-
+ 
   
   const filteredCourses = useMemo(() => {
     return coursesData
@@ -36,7 +36,7 @@ export default function CoursesPage() {
         />
       </div>
 
-      {/* Grid */}
+     
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
         {filteredCourses.length > 0 ? (

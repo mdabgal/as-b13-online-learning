@@ -94,7 +94,6 @@ export default function Navbar() {
 
       </div>
 
-      {/* MOBILE MENU */}
       {open && (
         <div className="absolute top-16 left-0 w-full bg-base-100 shadow-md flex flex-col gap-3 p-4 md:hidden z-50">
 

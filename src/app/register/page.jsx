@@ -145,7 +145,7 @@ export default function RegisterPage() {
 
         <div className="divider">OR</div>
 
-        {/* GOOGLE LOGIN */}
+        
         <button
           onClick={handleGoogleLogin}
           className="btn w-full border border-gray-300 flex items-center gap-2"

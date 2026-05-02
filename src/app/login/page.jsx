@@ -102,12 +102,12 @@ export default function LoginPage() {
             required
           />
 
-          <button
-            disabled={loading}
-            className="btn w-full bg-[#14B8A6] text-white hover:bg-teal-600"
-          >
-            Login
-          </button>
+        <button
+  disabled={loading}
+  className="btn w-full bg-[#14B8A6] text-white hover:bg-teal-600"
+>
+  {loading ? "Logging in..." : "Login"}
+</button>
 
         </form>
 
