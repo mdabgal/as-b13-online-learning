@@ -1,8 +1,17 @@
 
 import Link from "next/link";
 import { FaBook, FaBullseye, FaLaptopCode, FaRocket } from "react-icons/fa";
-
+import courses from "@/data/courses.json";
 export default function Home() {
+
+const popular = [...courses]
+  .sort((a, b) => b.rating - a.rating)
+  .slice(0, 3);
+
+
+  
+
+
   return (
     <div>
 
@@ -30,7 +39,6 @@ export default function Home() {
 
    
       
-
 <section className="container mx-auto px-6 py-16">
 
   <h2 className="text-3xl font-bold text-center mb-10 text-[#14B8A6]">
@@ -39,13 +47,15 @@ export default function Home() {
 
   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    {[
-      { title: "Web Development", instructor: "John Doe" },
-      { title: "UI/UX Design", instructor: "Sarah Smith" },
-      { title: "Digital Marketing", instructor: "Michael Brown" }
-    ].map((c, i) => (
+    {popular.map((c) => (
 
-      <div key={i} className="bg-base-100 shadow-md rounded-xl p-6 hover:scale-105 transition">
+      <div key={c.id} className="bg-base-100 shadow-md rounded-xl p-6 hover:scale-105 transition">
+
+        <img
+          src={c.image}
+          alt={c.title}
+          className="rounded mb-3"
+        />
 
         <h3 className="font-bold text-lg">{c.title}</h3>
 
@@ -53,9 +63,16 @@ export default function Home() {
           Instructor: {c.instructor}
         </p>
 
-        <button className="btn btn-sm bg-[#14B8A6] text-white mt-4 w-full">
+        <p className="text-sm mt-1">
+          ⭐ {c.rating}
+        </p>
+
+        <Link
+          href={`/courses/${c.id}`}
+          className="btn btn-sm bg-[#14B8A6] text-white mt-4 w-full"
+        >
           View Details
-        </button>
+        </Link>
 
       </div>
 
@@ -64,6 +81,9 @@ export default function Home() {
   </div>
 
 </section>
+
+
+
 
 
 

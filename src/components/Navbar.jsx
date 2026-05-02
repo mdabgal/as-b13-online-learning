@@ -20,7 +20,7 @@ export default function Navbar() {
     <div className="navbar bg-base-100 shadow px-6 relative">
 
    
-   
+
       <div className="flex-1">
         <Link href="/" className="text-xl font-bold text-[#14B8A6]">
           SkillSphere
@@ -107,10 +107,14 @@ export default function Navbar() {
           {session?.user ? (
             <>
               <div className="flex items-center gap-2">
-                <img
-                  src={session.user.image || "/user.png"}
-                  className="w-10 h-10 rounded-full"
-                />
+               <Image
+  src={avatar || "/userAvatar.png"}
+  alt="User avatar"
+  width={60}
+  height={60}
+  className="w-10 h-10 rounded-full border"
+  unoptimized
+/>
                 <span>{session.user.name}</span>
               </div>
 

@@ -3,17 +3,16 @@
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Profile() {
   const { data: session, isLoading } = authClient.useSession();
 
   const avatar =
-    typeof session?.user?.image === "string" &&
-    session.user.image.startsWith("http")
+    session?.user?.image?.startsWith("http")
       ? session.user.image
       : "/userAvatar.png";
 
+ 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -22,22 +21,32 @@ export default function Profile() {
     );
   }
 
+
   if (!session?.user) {
     return (
       <div className="text-center mt-10">
         <h1 className="text-xl">Please login first</h1>
+        <Link href="/login" className="text-teal-500 underline">
+          Go to Login
+        </Link>
       </div>
     );
   }
 
+  
+  const handleLogout = async () => {
+    await authClient.signOut();
+    window.location.href = "/";
+  };
+
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 shadow-lg rounded-lg bg-base-100">
 
-     
       <h1 className="text-2xl font-bold mb-6 text-center">
         My Profile
       </h1>
 
+     
       <div className="flex justify-center mb-4">
         <Image
           src={avatar}
@@ -48,7 +57,7 @@ export default function Profile() {
         />
       </div>
 
- 
+     
       <div className="space-y-3 text-center">
 
         <p>
@@ -63,13 +72,24 @@ export default function Profile() {
 
       </div>
 
-      <div className="flex justify-center items-center mt-4">
-     <Link href="/profile/update">
-  <button className="btn bg-teal-500 text-white">
-    Update Profile
-  </button>
-</Link>
-</div>
+     
+      <div className="flex flex-col gap-3 items-center mt-6">
+
+        <Link href="/profile/update">
+          <button className="btn bg-teal-500 text-white">
+            Update Profile
+          </button>
+        </Link>
+
+        <button
+          onClick={handleLogout}
+          className="btn btn-outline btn-error"
+        >
+          Logout
+        </button>
+
+      </div>
+
     </div>
   );
 }

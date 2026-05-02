@@ -5,8 +5,11 @@ import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -16,6 +19,17 @@ export default function RegisterPage() {
 
   const [loading, setLoading] = useState(false);
 
+  
+  const handleGoogleLogin = async () => {
+    toast.loading("Redirecting to Google...");
+
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+  };
+
+ 
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -36,29 +50,28 @@ export default function RegisterPage() {
       });
 
       if (error) {
-        toast.error(error.message || "This email is already registered", {
+        toast.error(error.message || "Registration failed", {
           id: loadingToast,
         });
-        setLoading(false);
         return;
       }
 
-      if (data) {
-        toast.success(`Welcome ${form.name}! Account created successfully`, {
-          id: loadingToast,
-        });
+      toast.success("Account created successfully!", {
+        id: loadingToast,
+      });
 
-        // optional: reset form
-        setForm({
-          name: "",
-          email: "",
-          password: "",
-          image: "",
-        });
-      }
+      setForm({
+        name: "",
+        email: "",
+        password: "",
+        image: "",
+      });
+
+     
+      router.push("/login");
 
     } catch (err) {
-      toast.error("Something went wrong. Try again later", {
+      toast.error("Something went wrong", {
         id: loadingToast,
       });
     } finally {
@@ -68,34 +81,36 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
+
       <div className="w-full max-w-md bg-base-100 shadow-xl rounded-2xl p-8">
 
         <h2 className="text-2xl font-bold text-center text-[#14B8A6]">
           Create Account
         </h2>
 
+        {/* form */}
         <form onSubmit={handleRegister} className="mt-6 space-y-4">
 
           <input
             type="text"
             placeholder="Full Name"
             className="input input-bordered w-full"
-            required
             value={form.name}
             onChange={(e) =>
               setForm({ ...form, name: e.target.value })
             }
+            required
           />
 
           <input
             type="email"
             placeholder="Email"
             className="input input-bordered w-full"
-            required
             value={form.email}
             onChange={(e) =>
               setForm({ ...form, email: e.target.value })
             }
+            required
           />
 
           <input
@@ -112,24 +127,29 @@ export default function RegisterPage() {
             type="password"
             placeholder="Password"
             className="input input-bordered w-full"
-            required
             value={form.password}
             onChange={(e) =>
               setForm({ ...form, password: e.target.value })
             }
+            required
           />
 
           <button
             disabled={loading}
-            className="btn w-full bg-[#14B8A6] text-white hover:bg-teal-600"
+            className="btn w-full bg-[#14B8A6] text-white"
           >
             {loading ? "Creating..." : "Register"}
           </button>
+
         </form>
 
         <div className="divider">OR</div>
 
-        <button className="btn w-full border border-gray-300 flex items-center gap-2">
+        {/* GOOGLE LOGIN */}
+        <button
+          onClick={handleGoogleLogin}
+          className="btn w-full border border-gray-300 flex items-center gap-2"
+        >
           <FaGoogle /> Continue with Google
         </button>
 
