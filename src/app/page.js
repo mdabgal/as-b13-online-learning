@@ -1,7 +1,9 @@
+"use client";
 
 import Link from "next/link";
 import { FaBook, FaBullseye, FaLaptopCode, FaRocket } from "react-icons/fa";
 import courses from "@/data/courses.json";
+import { motion } from "framer-motion";
 export default function Home() {
 
 const popular = [...courses]
@@ -19,20 +21,55 @@ const popular = [...courses]
       <section className=" bg-teal-50 h-[400px] mt-20 py-20">
         <div className="container mx-auto px-6 text-center">
 
-          <h1 className="text-4xl md:text-5xl flex justify-center items-center gap-6 font-bold">
-            Upgrade Your Skills Today <FaRocket/>
-          </h1>
+        
+
+<motion.h1
+  initial={{ opacity: 0, y: -50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  className="text-4xl md:text-5xl flex justify-center items-center gap-6 font-bold"
+>
+  Upgrade Your Skills Today <FaRocket/>
+</motion.h1>
+
 
           <p className="mt-8 text-gray-500 text-lg">
             Learn from expert instructors and build your future.
           </p>
 
-          <Link
+          {/* <Link
             href="/courses"
             className="btn text-[#14B8A6] border border-[#14B8A6]  mt-6 "
           >
             Explore Courses
-          </Link>
+          </Link> */}
+
+            <motion.div
+  initial={{ opacity: 0, y: 15 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4, ease: "easeOut" }}
+>
+  <motion.div
+    whileHover={{
+      scale: 1.05,
+      y: -2,
+    }}
+    whileTap={{ scale: 0.97 }}
+    transition={{
+      type: "spring",
+      stiffness: 400,
+      damping: 20,
+    }}
+  >
+    <Link
+      href="/courses"
+      className="btn bg-[#14B8A6] text-white border-none mt-6 px-6 relative overflow-hidden"
+    >
+      Explore Courses
+    </Link>
+  </motion.div>
+</motion.div>
+
 
         </div>
       </section>
@@ -49,8 +86,8 @@ const popular = [...courses]
 
     {popular.map((c) => (
 
-      <div key={c.id} className="bg-base-100 shadow-md rounded-xl p-6 hover:scale-105 transition">
-
+     
+<div key={c.id} className="bg-base-100 shadow-md rounded-xl p-6 hover:scale-105 transition">
         <img
           src={c.image}
           alt={c.title}
