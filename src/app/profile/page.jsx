@@ -77,7 +77,7 @@ export default function Profile() {
       
       <div className="flex flex-col gap-3 items-center mt-6">
 
-        <Link href="/my-profile/update">
+        <Link href="/profile/update">
           <button className="btn bg-teal-500 text-white">
             Update Profile
           </button>
